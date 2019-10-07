@@ -1,0 +1,7 @@
+body{
+    background-image: image("../img/bgIndex.jpg");
+}
+
+.ui.grid>.column:not(.row) {
+    padding-top: 3rem;
+}

@@ -1,0 +1,9 @@
+/*body{
+    background: url("../img/bgIndex.jpg");
+}*/
+.ui.table {
+    text-align: center;
+}
+.ui.grid>.column:not(.row) {
+    padding-top: 3rem;
+}
