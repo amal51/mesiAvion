@@ -1,9 +1,8 @@
 package servlet;
 
-import config.Format;
+import config.APIFormat;
 import entity.Passagers;
 import services.PassagerService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +26,7 @@ public class PassagerServlet extends HttpServlet {
                 String motDePassePassager = request.getParameter("MotDePassePassager");
                 Date dateNaissancePassager = new Date();
                 try {
-                     dateNaissancePassager = Format.DATE_NAISSANCE.parse(request.getParameter("dateNaissancePassager"));
+                     dateNaissancePassager = APIFormat.DATE_NAISSANCE.parse(request.getParameter("dateNaissancePassager"));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -53,7 +52,7 @@ public class PassagerServlet extends HttpServlet {
                 String motDePassePassagerEdit = request.getParameter("MotDePassePassager");
                 Date dateNaissancePassagerEdit = new Date();
                 try {
-                    dateNaissancePassagerEdit = Format.DATE_NAISSANCE.parse(request.getParameter("dateNaissancePassager"));
+                    dateNaissancePassagerEdit = APIFormat.DATE_NAISSANCE.parse(request.getParameter("dateNaissancePassager"));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

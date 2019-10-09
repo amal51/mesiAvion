@@ -1,6 +1,6 @@
 package servlet;
 
-import config.Format;
+import config.APIFormat;
 import entity.DetailsVols;
 import entity.Vol;
 import services.AvionService;
@@ -23,8 +23,8 @@ public class DetailsVolsServlet extends HttpServlet {
                 DetailsVols detailsVols = new DetailsVols();
                 detailsVols.ARN = AvionService.getUnAvion(request.getParameter("ARN"));
                 try {
-                    detailsVols.dateDepart = Format.DATE_FORMAT.parse(request.getParameter("dateDepart"));
-                    detailsVols.dateArrivee = Format.DATE_FORMAT.parse(request.getParameter("dateArrivee"));
+                    detailsVols.dateDepart = APIFormat.DATE_FORMAT.parse(request.getParameter("dateDepart"));
+                    detailsVols.dateArrivee = APIFormat.DATE_FORMAT.parse(request.getParameter("dateArrivee"));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -35,8 +35,8 @@ public class DetailsVolsServlet extends HttpServlet {
                 DetailsVols detailsVolsEdit = new DetailsVols();
                 detailsVolsEdit.ARN = AvionService.getUnAvion(request.getParameter("ARN"));
                 try {
-                    detailsVolsEdit.dateDepart = Format.DATE_FORMAT.parse(request.getParameter("dateDepart"));
-                    detailsVolsEdit.dateArrivee = Format.DATE_FORMAT.parse(request.getParameter("dateArrivee"));
+                    detailsVolsEdit.dateDepart = APIFormat.DATE_FORMAT.parse(request.getParameter("dateDepart"));
+                    detailsVolsEdit.dateArrivee = APIFormat.DATE_FORMAT.parse(request.getParameter("dateArrivee"));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

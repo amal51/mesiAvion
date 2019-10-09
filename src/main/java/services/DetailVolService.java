@@ -1,6 +1,6 @@
 package services;
 
-import config.Format;
+import config.APIFormat;
 import config.HibernateUtil;
 import entity.Avion;
 import entity.DetailsVols;

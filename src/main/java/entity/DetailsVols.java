@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class DetailsVols {
@@ -21,6 +22,10 @@ public class DetailsVols {
     public Date dateArrivee;
     @Column(nullable = false, columnDefinition = "bool default true")
     public boolean estActif;
+
+    @OneToMany
+    @JoinColumn(name = "idDetailsVols")
+    public List<Reservation> reservations;
 
     public long getIdDetailsVols() {
         return idDetailsVols;
