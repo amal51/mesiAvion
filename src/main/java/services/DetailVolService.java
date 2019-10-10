@@ -150,24 +150,4 @@ public class DetailVolService {
         }
         return detailsVols;
     }
-    public static  Long getUnIdDetailVol(Vol vol){
-        Long idVol = vol.idVol;
-        Session session = null;
-        DetailsVols detailsVols = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            String sql = "FROM DetailsVols WHERE idVol = :idVol";
-            Query query = session.createQuery(sql);
-            List<DetailsVols> result = query.list();
-            idVol = result.get(0).getIdDetailsVols();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return idVol;
-    }
 }

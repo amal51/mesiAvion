@@ -16,33 +16,50 @@ import java.util.Map;
 
 public class VolServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String message = null;
+        boolean err = false;
         switch (request.getServletPath()) {
             case "/vol/creation":
-                String villeDepart = request.getParameter("villeDepart");
-                String villeArrive = request.getParameter("villeArrive");
-                Vol vol = new Vol();
-                vol.villeDepartVol = villeDepart;
-                vol.villeArriveeVol = villeArrive;
-                VolService.creationVol(vol);
-                request.getRequestDispatcher("volCreation.jsp").forward(request, response);
+                try {
+                    String villeDepart = request.getParameter("villeDepart");
+                    String villeArrive = request.getParameter("villeArrive");
+                    Vol vol = new Vol();
+                    vol.villeDepartVol = villeDepart;
+                    vol.villeArriveeVol = villeArrive;
+                    VolService.creationVol(vol);
+                    message = "Le vol a bien été créé";
+                } catch (Exception e) {
+                    message = "Une erreur est survenue lors de la création";
+                    err = true;
+                } finally {
+                    response.sendRedirect("/vol?message=" + message + "&err=" + err);
+                }
+                   // request.getRequestDispatcher("volCreation.jsp").forward(request, response);
                 break;
             case "/vol/update":
-                String villeDepartEdit = request.getParameter("villeDepart");
-                String villeArriveEdit = request.getParameter("villeArrive");
-                Vol volEdit = new Vol();
-                volEdit.villeDepartVol = villeDepartEdit;
-                volEdit.villeArriveeVol = villeArriveEdit;
-                VolService.creationVol(volEdit);
-                request.getRequestDispatcher("volModification.jsp").forward(request, response);
+                try {
+                    String villeDepartEdit = request.getParameter("villeDepart");
+                    String villeArriveEdit = request.getParameter("villeArrive");
+                    Vol volEdit = new Vol();
+                    volEdit.villeDepartVol = villeDepartEdit;
+                    volEdit.villeArriveeVol = villeArriveEdit;
+                    VolService.creationVol(volEdit);
+                    message = "Le vol a bien été modifié";
+                } catch (Exception e) {
+                    message = "Une erreur est survenue lors de la modification";
+                    err = true;
+                } finally {
+                    response.sendRedirect("/vols?message=" + message + "&err=" + err);
+                }
+              //  request.getRequestDispatcher("volModification.jsp").forward(request, response);
         }
 
     }
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Récupération des infos de la requête
-        System.out.println(request.getServletPath());
-
+        String message = null;
+        boolean err = false;
         // Affichage
         switch (request.getServletPath()) {
             case "/vol":
@@ -50,9 +67,15 @@ public class VolServlet extends HttpServlet {
                 request.getRequestDispatcher("volListe.jsp").forward(request, response);
                 break;
             case "/vol/delete":
-                System.out.println(request.getParameter("id") + "delete vol");
-                VolService.suppressionVol(Long.parseLong(request.getParameter("id")));
-                response.sendRedirect("/vol");
+                try {
+                    VolService.suppressionVol(Long.parseLong(request.getParameter("id")));
+                    message = "Le vol a bien été supprimé";
+                } catch (Exception e){
+                    message = "Une erreur est survenue lors de la suppression";
+                    err = true;
+                }finally {
+                    response.sendRedirect("/vols?message=" + message + "&err=" + err);
+                }
                 break;
             case "/vol/edition":
                 System.out.println(request.getParameter("id"));

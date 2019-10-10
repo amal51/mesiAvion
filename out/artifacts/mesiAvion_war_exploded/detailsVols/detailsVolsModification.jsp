@@ -7,12 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <c:set var="reservation" value="${resersation}"></c:set>
-    <title>Réservation - MESI AVION</title>
+    <c:set var="listedetail" value="${listeDetailsVols}"></c:set>
+    <title>Création détail vol - MESI AVION</title>
     <link rel="stylesheet" href="../CSS/semantic.min.css">
     <link rel="stylesheet" href="../CSS/Style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/jquery.datetimepicker.min.css" />
 </head>
 
 <body id="root">
@@ -59,63 +61,58 @@
     <%--Contenu de la page--%>
     <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
         <div class="ui padded grid">
+
             <div class="row">
-                <h1 class="ui huge dividing header">Création d'une réservation </h1>
+                <h1 class="ui huge dividing header">Modification d'un détail Vol </h1>
             </div>
             <div class="row">
                 <form class="ui form" method="post">
+                    <fmt:formatDate value="${listedetail.dateDepart}" pattern="yyyy/MM/dd HH:mm" var="dateDepart" />
+                    <fmt:formatDate value="${listedetail.dateArrivee}" pattern="yyyy/MM/dd HH:mm" var="dateArrivee" />
                     <div class="field">
-                        <label>Classe : </label>
-                        <select class="ui fluid dropdown" name="classe">
-                            <option value="A">Classe Affaire</option>
-                            <option value="E">Classe économique</option>
-                        </select>
+                        <label>Date de départ : </label>
+                        <input class="datetimepicker" type="text" name="dateDepart" value="${dateDepart}"/>
+                    </div>
+                    <div class="field">
+                        <label>Date d'arrivée : </label>
+                        <input class="datetimepicker" type="text" name="dateArrivee" value="${dateArrivee}"/>
                     </div>
                     <div class="field">
                         <label> Vol : </label>
-                        <select class="ui fluid dropdown" name="vol">
-                                <option value="${reservation.idDetailsVols.idVol.idVol}" selected>${reservation.idDetailsVols.idVol.villeDepart} - ${reservation.idDetailsVols.idVol.villeArrivee}</option>
+                        <select class="ui selection dropdown" name="vol">
+                            <option value="${listedetail.idVol}" selected>${listedetail.idVol.villeDepartVol} - ${listedetail.idVol.villeArriveeVol}</option>
                             <c:forEach items="${listeVol}" var="listevol" varStatus="status">
                                 <option value="${listevol.idVol}">${listevol.villeDepartVol} - ${listevol.villeArriveeVol}</option>
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="field">
-                        <label>Date de voyage : </label>
-                        <select class="ui fluid dropdown" name="date">
-                            <option value="${reservation.idDetailsVols.idDetailsVols}" selected>${reservation.idDetailsVols.dateDepart} - ${reservation.idDetailsVols.dateArrivee}</option>
-                            <c:forEach items="${listeDetailsVols}" var="listedetailsvols" varStatus="status">
-                                <option value="${listedetailsvols.idDetailsVols}">${listedetailsvols.dateDepart} - ${listedetailsvols.dateArrivee}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label>Passager : </label>
-                        <select class="ui fluid dropdown" name="passager">
-                            <option value="${reservation.idPassager.numeroCNI}" selected>${reservation.idPassager.nomPassager},  ${reservation.idPassager.prenomPassager}</option>
-                            <c:forEach items="${listePassager}" var="listepassager" varStatus="status">
-                                <option value="${listepassager.numeroCNI}">${listepassager.nomPassager}, ${listepassager.prenomPassager}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
+
                     <div class="field">
                         <label>Modèle d'avion : </label>
-                        <select class="ui fluid dropdown" name="modele">
-                            <option value="${reservation.idDetailsVols.ARN.ARN}" selected>${reservation.idDetailsVols.ARN.modeleAvion.NomAvion},  ${reservation.idDetailsVols.ARN.ARN}</option>
+                        <select class="ui selection dropdown" name="ARN">
+                            <option value="${listedetail.ARN.ARN}" selected>${listedetail.ARN.modeleAvion.nomAvion},  ${listedetail.ARN.ARN}</option>
                             <c:forEach items="${listeAvion}" var="listeavion" varStatus="status">
                                 <option value="${listeavion.ARN}">${listeavion.modeleAvion.nomAvion}, ${listeavion.ARN}</option>
                             </c:forEach>
                         </select>
                     </div>
-                    <button class="ui green button" type="submit">Valider la création</button>
+                    <button class="ui green button" type="submit">Valider la modification</button>
                 </form>
             </div>
             <div class="row">
-                <a href="<%=request.getContextPath()+"/reservation/creation"%>">
+                <a href="<%=request.getContextPath()+"/detailsVols/creation"%>">
                     <div class="ui animated fade blue basic button" tabindex="0">
-                        <div class="visible content">Créer une nouvelle réservation</div>
+                        <div class="visible content">Créer un nouveau détail vol</div>
                         <div class="hidden content">
                             <i class="calendar plus icon"></i>
+                        </div>
+                    </div>
+                </a>
+                <a href="<%=request.getContextPath()+"/detailsVols/delete?id="%>${listedetail.idDetailsVols}">
+                    <div class="ui animated fade red basic button" tabindex="0">
+                        <div class="visible content">Supprimer ce détail de vol</div>
+                        <div class="hidden content">
+                            <i class="trash icon"></i>
                         </div>
                     </div>
                 </a>
@@ -123,16 +120,9 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".ui.toggle.button").click(function () {
-            $(".mobile.only.grid .ui.vertical.menu").toggle(100);
-        });
-    });
-</script>
+<script src="../JS/jquery.js"></script>
+<script src="../JS/jquery.datetimepicker.full.min.js"></script>
+<script src="../JS/semantic.min.js"></script>
 <script type="text/javascript" src="../JS/javascript.js"></script>
 </body>
 </html>

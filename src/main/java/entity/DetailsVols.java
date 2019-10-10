@@ -4,11 +4,13 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 public class DetailsVols {
     @Id
     @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     public long idDetailsVols;
     @ManyToOne
     @JoinColumn(name = "ARN")

@@ -7,12 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <c:set var="reservation" value="${resersation}"></c:set>
     <title>Réservation - MESI AVION</title>
     <link rel="stylesheet" href="../CSS/semantic.min.css">
     <link rel="stylesheet" href="../CSS/Style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/jquery.datetimepicker.min.css" />
 </head>
 
 <body id="root">
@@ -72,18 +74,12 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label> Vol : </label>
-                        <select class="ui selection dropdown" name="vol">
-                            <c:forEach items="${listeVol}" var="listevol" varStatus="status">
-                            <option value="${listevol.idVol}">${listevol.villeDepartVol} - ${listevol.villeArriveeVol}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label>Date de voyage : </label>
-                        <select class="ui selection dropdown" name="date">
+                        <label>Veuillez choisir le vol ainsi que la date de départ et d'arrivée : </label>
+                        <select class="ui selection dropdown" name="idDetailVol">
                             <c:forEach items="${listeDetailsVols}" var="listedetailsvols" varStatus="status">
-                                <option value="${listedetailsvols.idDetailsVols}">${listedetailsvols.dateDepart} - ${listedetailsvols.dateArrivee}</option>
+                                <fmt:formatDate value="${listedetailsvols.dateDepart}" pattern="yyyy/MM/dd HH:mm" var="dateDepart" />
+                                <fmt:formatDate value="${listedetailsvols.dateArrivee}" pattern="yyyy/MM/dd HH:mm" var="dateArrivee" />
+                                <option value="${listedetailsvols.idDetailsVols}"> ${listedetailsvols.idVol.villeDepartVol} / ${listedetailsvols.idVol.villeArriveeVol} -> ${dateDepart} - ${dateArrivee}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -92,14 +88,6 @@
                         <select class="ui selection dropdown" name="passager">
                             <c:forEach items="${listePassager}" var="listepassager" varStatus="status">
                                 <option value="${listepassager.numeroCNI}">${listepassager.nomPassager}, ${listepassager.prenomPassager}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label>Modèle d'avion : </label>
-                        <select class="ui selection dropdown" name="modele">
-                            <c:forEach items="${listeAvion}" var="listeavion" varStatus="status">
-                                <option value="${listeavion.ARN}">${listeavion.modeleAvion.nomAvion}, ${listeavion.ARN}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -119,16 +107,9 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".ui.toggle.button").click(function () {
-            $(".mobile.only.grid .ui.vertical.menu").toggle(100);
-        });
-    });
-</script>
+<script src="../JS/jquery.js"></script>
+<script src="../JS/jquery.datetimepicker.full.min.js"></script>
+<script src="../JS/semantic.min.js"></script>
 <script type="text/javascript" src="../JS/javascript.js"></script>
 </body>
 </html>

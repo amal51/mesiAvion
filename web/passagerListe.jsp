@@ -12,8 +12,9 @@
 <html>
 <head>
     <title>Liste des Passagers - MESI AVION</title>
-    <link rel="stylesheet" href="CSS/semantic.min.css">
-    <link rel="stylesheet" href="CSS/Style.css">
+    <link rel="stylesheet" href="../CSS/semantic.min.css">
+    <link rel="stylesheet" href="../CSS/Style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/jquery.datetimepicker.min.css" />
 </head>
 
     <body id="root">
@@ -61,6 +62,14 @@
                         <h1 class="ui huge dividing header">Liste des passagers</h1>
                     </div>
                     <div class="row">
+                        <div class="ui negative message">
+                            <div class="header"></div>
+                        </div>
+                        <div class="ui positive message">
+                            <div class="header"></div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <table class="ui single line striped selectable unstackable table">
                             <thead>
                             <tr>
@@ -101,14 +110,9 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $(".ui.toggle.button").click(function () {
-                    $(".mobile.only.grid .ui.vertical.menu").toggle(100);
-                });
-            });
-        </script>
+        <script src="../JS/jquery.js"></script>
+        <script src="../JS/jquery.datetimepicker.full.min.js"></script>
+        <script src="../JS/semantic.min.js"></script>
+        <script type="text/javascript" src="../JS/javascript.js"></script>
     </body>
 </html>

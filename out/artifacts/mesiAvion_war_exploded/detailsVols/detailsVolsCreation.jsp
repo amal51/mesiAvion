@@ -9,10 +9,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <c:set var="reservation" value="${resersation}"></c:set>
-    <title>Réservation - MESI AVION</title>
+    <c:set var="detailvol" value="${detailvol}"></c:set>
+    <title>Création détail vol - MESI AVION</title>
     <link rel="stylesheet" href="../CSS/semantic.min.css">
     <link rel="stylesheet" href="../CSS/Style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/jquery.datetimepicker.min.css" />
 </head>
 
 <body id="root">
@@ -60,16 +61,17 @@
     <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
         <div class="ui padded grid">
             <div class="row">
-                <h1 class="ui huge dividing header">Création d'une réservation </h1>
+                <h1 class="ui huge dividing header">Création d'un détail Vol </h1>
             </div>
             <div class="row">
                 <form class="ui form" method="post">
                     <div class="field">
-                        <label>Classe : </label>
-                        <select class="ui selection dropdown" name="classe">
-                                <option value="A">Classe Affaire</option>
-                                <option value="E">Classe économique</option>
-                        </select>
+                        <label>Date de départ : </label>
+                        <input class="datetimepicker" type="text" name="dateDepart">
+                    </div>
+                    <div class="field">
+                        <label>Date d'arrivée : </label>
+                        <input class="datetimepicker" type="text" name="dateArrivee">
                     </div>
                     <div class="field">
                         <label> Vol : </label>
@@ -79,18 +81,10 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="field">
-                        <label>Date de voyage : </label>
-                        <div class="ui calendar" id="date">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" placeholder="Date/Time">
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="field">
                         <label>Modèle d'avion : </label>
-                        <select class="ui selection dropdown" name="modele">
+                        <select class="ui selection dropdown" name="ARN">
                             <c:forEach items="${listeAvion}" var="listeavion" varStatus="status">
                                 <option value="${listeavion.ARN}">${listeavion.modeleAvion.nomAvion}, ${listeavion.ARN}</option>
                             </c:forEach>
@@ -100,9 +94,9 @@
                 </form>
             </div>
             <div class="row">
-                <a href="<%=request.getContextPath()+"/reservation/creation"%>">
+                <a href="<%=request.getContextPath()+"/detailsVols/creation"%>">
                     <div class="ui animated fade blue basic button" tabindex="0">
-                        <div class="visible content">Créer une nouvelle réservation</div>
+                        <div class="visible content">Créer un nouveau détail vol</div>
                         <div class="hidden content">
                             <i class="calendar plus icon"></i>
                         </div>
@@ -112,16 +106,9 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".ui.toggle.button").click(function () {
-            $(".mobile.only.grid .ui.vertical.menu").toggle(100);
-        });
-    });
-</script>
+<script src="../JS/jquery.js"></script>
+<script src="../JS/jquery.datetimepicker.full.min.js"></script>
+<script src="../JS/semantic.min.js"></script>
 <script type="text/javascript" src="../JS/javascript.js"></script>
 </body>
 </html>

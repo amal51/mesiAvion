@@ -20,46 +20,69 @@ import java.io.IOException;
 public class AvionServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String message = null;
+        boolean err = false;
         switch (request.getServletPath()) {
             case "/avion/creation":
-                String ARN = request.getParameter("ARN");
-                Long modeleAvion = Long.parseLong(request.getParameter("modeleAvion"));
-                Long constructeur = Long.parseLong(request.getParameter("constructeur"));
-                Avion avion = new Avion();
-                avion.ARN = ARN;
-                avion.modeleAvion = ModeleAvionService.getUnModele(modeleAvion);
-                avion.modeleAvion.constructeur = ConstructeurAvionService.getUnConstructeur(constructeur);
-                AvionService.creationAvion(avion);
-                request.getRequestDispatcher("avionCreation.jsp").forward(request, response);
+                try {
+                    String ARN = request.getParameter("ARN");
+                    Long modeleAvion = Long.parseLong(request.getParameter("modeleAvion"));
+                    Long constructeur = Long.parseLong(request.getParameter("constructeur"));
+                    Avion avion = new Avion();
+                    avion.ARN = ARN;
+                    avion.modeleAvion = ModeleAvionService.getUnModele(modeleAvion);
+                    avion.modeleAvion.constructeur = ConstructeurAvionService.getUnConstructeur(constructeur);
+                    AvionService.creationAvion(avion);
+                    message = "L'avion a bien été créé";
+                } catch (Exception e) {
+                    message = "Une erreur est survenue lors de la création";
+                    err = true;
+                } finally {
+                    response.sendRedirect("/avion?message=" + message + "&err=" + err);
+                }
                 break;
             case "/avion/edition":
-                String ARNEdit = request.getParameter("ARN");
-                System.out.println("ARN " + request.getParameter("ARN"));
-                System.out.println("MODELE " + request.getParameter("modeleAvion"));
-                Long modeleAvionEdit = Long.parseLong(request.getParameter("modeleAvion"));
-                Long constructeurEdit = Long.parseLong(request.getParameter("constructeur"));
-                Avion avionEdit = new Avion();
-                avionEdit.ARN = ARNEdit;
-                avionEdit.modeleAvion = ModeleAvionService.getUnModele(modeleAvionEdit);
-                avionEdit.modeleAvion.constructeur = ConstructeurAvionService.getUnConstructeur(constructeurEdit);
-                AvionService.updateAvion(avionEdit);
-                request.getRequestDispatcher("avionCreation.jsp").forward(request, response);
+                try {
+                    String ARNEdit = request.getParameter("ARN");
+                    System.out.println("ARN " + request.getParameter("ARN"));
+                    System.out.println("MODELE " + request.getParameter("modeleAvion"));
+                    Long modeleAvionEdit = Long.parseLong(request.getParameter("modeleAvion"));
+                    Long constructeurEdit = Long.parseLong(request.getParameter("constructeur"));
+                    Avion avionEdit = new Avion();
+                    avionEdit.ARN = ARNEdit;
+                    avionEdit.modeleAvion = ModeleAvionService.getUnModele(modeleAvionEdit);
+                    avionEdit.modeleAvion.constructeur = ConstructeurAvionService.getUnConstructeur(constructeurEdit);
+                    AvionService.updateAvion(avionEdit);
+                    message = "L'avion a bien été modifié";
+                } catch (Exception e) {
+                    message = "Une erreur est survenue lors de la modification";
+                    err = true;
+                } finally {
+                    response.sendRedirect("/avion?message=" + message + "&err=" + err);
+                }
+                //request.getRequestDispatcher("avionCreation.jsp").forward(request, response);
                 break;
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+        String message = null;
+        boolean err = false;
         switch (request.getServletPath()) {
             case "/avion":
                 request.setAttribute("listeAvion", AvionService.getAvion());
                 request.getRequestDispatcher("avionListe.jsp").forward(request, response);
                 break;
             case "/avion/delete":
-                System.out.println(request.getParameter("id") + "delete vol");
-                AvionService.suppressionAvion(request.getParameter("id"));
-                response.sendRedirect("/avion");
+                try{
+                    AvionService.suppressionAvion(request.getParameter("id"));
+                    message = "L'avion' a bien été supprimé";
+                } catch (Exception e){
+                    message = "Une erreur est survenue lors de la suppression";
+                    err = true;
+                }finally {
+                    response.sendRedirect("/avion?message=" + message + "&err=" + err);
+                }
                 break;
             case "/avion/edition":
                 System.out.println(request.getParameter("id"));
