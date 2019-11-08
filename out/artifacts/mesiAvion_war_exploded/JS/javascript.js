@@ -34,12 +34,11 @@ function $_GET(param) {
     $('.ui.positive.message').hide();
     if (message) {
         if (err === "true") {
-            $('.ui.negative.message .header').html(message);
+            $('.ui.negative.message .header').html("Un problème est survenu");
             $('.ui.negative.message').slideDown(10).delay(3000).slideUp(1000);
         } else {
-            $('.ui.positive.message .header').html(message);
+            $('.ui.positive.message .header').html("L'opération s'est bien passée");
             $('.ui.positive.message').slideDown(10).delay(3000).slideUp(1000);
         }
     }
 });
-

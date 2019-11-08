@@ -7,6 +7,7 @@ import entity.ModeleAvion;
 import org.hibernate.Session;
 import services.AvionService;
 import services.ConstructeurAvionService;
+import services.LangueService;
 import services.ModeleAvionService;
 
 import javax.servlet.ServletException;
@@ -25,6 +26,7 @@ public class AvionServlet extends HttpServlet {
         switch (request.getServletPath()) {
             case "/avion/creation":
                 try {
+                    request.setAttribute("traduction", LangueService.getMessage());
                     String ARN = request.getParameter("ARN");
                     Long modeleAvion = Long.parseLong(request.getParameter("modeleAvion"));
                     Long constructeur = Long.parseLong(request.getParameter("constructeur"));
@@ -43,6 +45,7 @@ public class AvionServlet extends HttpServlet {
                 break;
             case "/avion/edition":
                 try {
+                    request.setAttribute("traduction", LangueService.getMessage());
                     String ARNEdit = request.getParameter("ARN");
                     System.out.println("ARN " + request.getParameter("ARN"));
                     System.out.println("MODELE " + request.getParameter("modeleAvion"));
@@ -70,6 +73,7 @@ public class AvionServlet extends HttpServlet {
         boolean err = false;
         switch (request.getServletPath()) {
             case "/avion":
+                request.setAttribute("traduction", LangueService.getMessage());
                 request.setAttribute("listeAvion", AvionService.getAvion());
                 request.getRequestDispatcher("avionListe.jsp").forward(request, response);
                 break;
@@ -87,12 +91,14 @@ public class AvionServlet extends HttpServlet {
             case "/avion/edition":
                 System.out.println(request.getParameter("id"));
                 if (request.getParameterMap().containsKey("id")){
+                    request.setAttribute("traduction", LangueService.getMessage());
                     request.setAttribute("avion", AvionService.getUnAvion(request.getParameter("id")));
                     request.getRequestDispatcher("avionModification.jsp").forward(request,response);
                     break;
                 }
                 break;
             case "/avion/creation":
+                request.setAttribute("traduction", LangueService.getMessage());
                 request.setAttribute("listeModele", ModeleAvionService.getModeleAvion());
                 request.setAttribute("listeConstructeur", ConstructeurAvionService.getConstructeur());
                 request.getRequestDispatcher("avionCreation.jsp").forward(request,response);

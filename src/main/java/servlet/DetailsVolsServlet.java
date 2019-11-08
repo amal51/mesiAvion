@@ -5,6 +5,7 @@ import entity.DetailsVols;
 import entity.Vol;
 import services.AvionService;
 import services.DetailVolService;
+import services.LangueService;
 import services.VolService;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ public class DetailsVolsServlet extends HttpServlet {
         switch (request.getServletPath()) {
             case "/detailsVols/creation":
                 try {
+                    request.setAttribute("traduction", LangueService.getMessage());
                     DetailsVols detailsVols = new DetailsVols();
                     detailsVols.ARN = AvionService.getUnAvion(request.getParameter("ARN"));
                     detailsVols.idVol = VolService.getUnVol(Long.parseLong(request.getParameter("vol")));
@@ -42,6 +44,7 @@ public class DetailsVolsServlet extends HttpServlet {
             case "/detailsVols/edition":
                 DetailsVols detailsVolsEdit = new DetailsVols();
                 try {
+                    request.setAttribute("traduction", LangueService.getMessage());
                     detailsVolsEdit.ARN = AvionService.getUnAvion(request.getParameter("ARN"));
                     detailsVolsEdit.idVol = VolService.getUnVol(Long.parseLong(request.getParameter("vol")));
                     detailsVolsEdit.dateDepart = APIFormat.FORMAT_API.parse(request.getParameter("dateDepart"));
@@ -64,6 +67,7 @@ public class DetailsVolsServlet extends HttpServlet {
         boolean err = false;
         switch (request.getServletPath()) {
             case "/detailsVols":
+                request.setAttribute("traduction", LangueService.getMessage());
                 request.setAttribute("listeDetailsVols", DetailVolService.getDetailVol());
                 request.getRequestDispatcher("detailsVolsListe.jsp").forward(request, response);
                 break;
@@ -81,6 +85,7 @@ public class DetailsVolsServlet extends HttpServlet {
             case "/detailsVols/edition":
                 System.out.println(request.getParameter("id"));
                 if (request.getParameterMap().containsKey("id")){
+                    request.setAttribute("traduction", LangueService.getMessage());
                     request.setAttribute("listeDetailsVols", DetailVolService.getUnDetailVol(Long.parseLong(request.getParameter("id"))));
                     request.setAttribute("listeVol", VolService.getVol());
                     request.setAttribute("listeAvion", AvionService.getAvion());
@@ -89,6 +94,7 @@ public class DetailsVolsServlet extends HttpServlet {
                 }
                 break;
             case "/detailsVols/creation":
+                request.setAttribute("traduction", LangueService.getMessage());
                 request.setAttribute("listeDetailsVols", DetailVolService.getDetailVol());
                 request.setAttribute("listeVol", VolService.getVol());
                 request.setAttribute("listeAvion", AvionService.getAvion());

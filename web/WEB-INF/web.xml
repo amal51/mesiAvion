@@ -71,4 +71,22 @@
         <url-pattern>/detailsVols/creation</url-pattern>
         <url-pattern>/detailsVols/edition</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Reporting</servlet-name>
+        <servlet-class>servlet.ReportingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Reporting</servlet-name>
+        <url-pattern>/reporting</url-pattern>
+        <url-pattern>/reporting/reservationPeriode</url-pattern>
+        <url-pattern>/reporting/nombrePassager</url-pattern>
+        <url-pattern>/reporting/nombrePassagerReservationPeriode</url-pattern>
+        <url-pattern>/reporting/nombreAnnulationPeriode</url-pattern>
+        <url-pattern>/reporting/nombreAvionMaintenance</url-pattern>
+        <url-pattern>/reporting/avionPlusVolPeriode</url-pattern>
+        <url-pattern>/reporting/PassagerPlusReservationPeriode</url-pattern>
+        <url-pattern>/reporting/pourcentageNombreAffaireEcoPeriode</url-pattern>
+    </servlet-mapping>
+
 </web-app>

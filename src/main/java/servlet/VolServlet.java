@@ -1,6 +1,7 @@
 package servlet;
 
 import entity.Vol;
+import services.LangueService;
 import services.PassagerService;
 import services.VolService;
 
@@ -21,6 +22,7 @@ public class VolServlet extends HttpServlet {
         switch (request.getServletPath()) {
             case "/vol/creation":
                 try {
+                    request.setAttribute("traduction", LangueService.getMessage());
                     String villeDepart = request.getParameter("villeDepart");
                     String villeArrive = request.getParameter("villeArrive");
                     Vol vol = new Vol();
@@ -38,6 +40,7 @@ public class VolServlet extends HttpServlet {
                 break;
             case "/vol/update":
                 try {
+                    request.setAttribute("traduction", LangueService.getMessage());
                     String villeDepartEdit = request.getParameter("villeDepart");
                     String villeArriveEdit = request.getParameter("villeArrive");
                     Vol volEdit = new Vol();
@@ -64,6 +67,7 @@ public class VolServlet extends HttpServlet {
         switch (request.getServletPath()) {
             case "/vol":
                 request.setAttribute("listeVol", VolService.getVol());
+                request.setAttribute("traduction", LangueService.getMessage());
                 request.getRequestDispatcher("volListe.jsp").forward(request, response);
                 break;
             case "/vol/delete":
@@ -80,12 +84,14 @@ public class VolServlet extends HttpServlet {
             case "/vol/edition":
                 System.out.println(request.getParameter("id"));
                 if (request.getParameterMap().containsKey("id")){
+                    request.setAttribute("traduction", LangueService.getMessage());
                     request.setAttribute("vol", VolService.getUnVol(Long.parseLong(request.getParameter("id"))));
                     request.getRequestDispatcher("volModification.jsp").forward(request,response);
                     break;
                 }
                 break;
             case "/vol/creation":
+                request.setAttribute("traduction", LangueService.getMessage());
                 request.getRequestDispatcher("volCreation.jsp").forward(request,response);
 
         }
